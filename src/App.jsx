@@ -11,65 +11,49 @@ import Analytics from "./pages/Analytics";
 
 function App() {
   const { globalUser, isLoading } = useAuth();
-  const isAuthenticated = globalUser;
 
-  return (
-  <div className="min-h-screen bg-slate-50 text-slate-900 font-sans antialiased">
-    {/* 1. ESTADO NO AUTENTICADO: Centrado y limpio */}
-    {!isAuthenticated && (
-      <div className="min-h-screen flex items-center justify-center p-6 bg-white">
-        <div className="w-full max-w-md">
-          <Authentication />
+  if (isLoading) {
+    return (
+      <div className="h-full w-full flex flex-col items-center justify-center gap-4 bg-slate-950">
+        <div className="w-9 h-9 border-4 border-slate-700 border-t-indigo-500 rounded-full animate-spin" />
+        <p className="text-slate-500 text-sm font-medium tracking-wide">Loading...</p>
+      </div>
+    );
+  }
+
+  if (!globalUser) {
+    return (
+      <div className="h-full w-full flex items-center justify-center bg-slate-950 p-6">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-indigo-950/40 via-slate-950 to-slate-950 pointer-events-none" />
+        <div className="relative w-full max-w-md">
+          <Authentication handleCloseModal={() => {}} />
         </div>
       </div>
-    )}
+    );
+  }
 
-    {/* 2. ESTADO CARGANDO: Un loader elegante */}
-    {isLoading && (
-      <div className="min-h-screen flex flex-col items-center justify-center gap-4">
-        <div className="w-10 h-10 border-4 border-slate-200 border-t-indigo-600 rounded-full animate-spin"></div>
-        <p className="text-slate-500 font-medium animate-pulse">Loading dashboard...</p>
-      </div>
-    )}
-
-    {/* 3. DASHBOARD PRINCIPAL (Autenticado) */}
-    {isAuthenticated && !isLoading && (
-      <div className="flex h-screen overflow-hidden">
-        
-        {/* Sidebar queda fijo a la izquierda */}
-        <Sidebar />
-
-        {/* Contenedor de contenido principal con scroll independiente */}
-        <main className="flex-1 overflow-y-auto overflow-x-hidden bg-slate-50">
-          <div className="container mx-auto p-4 md:p-8 lg:p-10 max-w-7xl">
-            
-            <ProtectedRoute canActivate={isAuthenticated} redirectPath="/">
-              <Routes>
-                <Route path="/" element={<Dashboard />} />
-                
-                <Route
-                  path="/users"
-                  element={
-                    <ProtectedRoute
-                      canActivate={globalUser?.role === "Admin"}
-                      redirectPath="/"
-                    >
-                      <Users />
-                    </ProtectedRoute>
-                  }
-                />
-                
-                <Route path="/products" element={<Products />} />
-                <Route path="/analytics" element={<Analytics />} />
-              </Routes>
-            </ProtectedRoute>
-
-          </div>
-        </main>
-      </div>
-    )}
-  </div>
-);
+  return (
+    <div className="flex h-full w-full overflow-hidden bg-slate-100">
+      <Sidebar />
+      <main className="flex-1 overflow-y-auto scrollbar-hide">
+        <ProtectedRoute canActivate={!!globalUser} redirectPath="/">
+          <Routes>
+            <Route path="/" element={<Dashboard />} />
+            <Route
+              path="/users"
+              element={
+                <ProtectedRoute canActivate={globalUser?.role === "Admin"} redirectPath="/">
+                  <Users />
+                </ProtectedRoute>
+              }
+            />
+            <Route path="/products" element={<Products />} />
+            <Route path="/analytics" element={<Analytics />} />
+          </Routes>
+        </ProtectedRoute>
+      </main>
+    </div>
+  );
 }
 
 export default App;
