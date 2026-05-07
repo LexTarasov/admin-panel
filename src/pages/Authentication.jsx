@@ -48,10 +48,10 @@ async function handleAuthenticate() {
         </svg>
       </div>
       <h2 className="text-3xl font-black text-slate-900 tracking-tight">
-        {isRegistration ? 'Crear cuenta' : '¡Bienvenido!'}
+        {isRegistration ? 'Create account' : 'Welcome!'}
       </h2>
       <p className="mt-2 text-sm text-slate-500 font-medium">
-        {isRegistration ? 'Regístrate para comenzar' : 'Inicia sesión en tu panel administrativo'}
+        {isRegistration ? 'Sign up to get started' : 'Sign in to your admin panel'}
       </p>
     </div>
 
@@ -64,18 +64,18 @@ async function handleAuthenticate() {
     <div className="space-y-5">
       {isRegistration && (
         <div className="space-y-1.5">
-          <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider ml-1">Nombre Completo</label>
+          <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider ml-1">Full Name</label>
           <input
             value={name}
             onChange={(e) => setName(e.target.value)}
-            placeholder="Tu nombre"
+            placeholder="Your name"
             className="w-full px-4 py-3.5 rounded-2xl border border-slate-200 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10 outline-none transition-all placeholder:text-slate-400 text-sm bg-slate-50/50"
           />
         </div>
       )}
 
       <div className="space-y-1.5">
-        <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider ml-1">Correo Electrónico</label>
+        <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider ml-1">Email Address</label>
         <input
           value={email}
           onChange={(e) => setEmail(e.target.value)}
@@ -86,7 +86,7 @@ async function handleAuthenticate() {
       </div>
 
       <div className="space-y-1.5">
-        <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider ml-1">Contraseña</label>
+        <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider ml-1">Password</label>
         <input
           value={password}
           onChange={(e) => setPassword(e.target.value)}
@@ -104,9 +104,9 @@ async function handleAuthenticate() {
         {isAuthenticating ? (
           <>
             <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
-            <span>Procesando...</span>
+            <span>Processing...</span>
           </>
-        ) : 'Continuar'}
+        ) : 'Continue'}
       </button>
     </div>
 
@@ -115,19 +115,19 @@ async function handleAuthenticate() {
         <div className="w-full border-t border-slate-100"></div>
       </div>
       <div className="relative flex justify-center text-xs font-bold uppercase tracking-widest">
-        <span className="px-4 bg-white text-slate-400">o también</span>
+        <span className="px-4 bg-white text-slate-400">or</span>
       </div>
     </div>
 
     <div className="text-center">
       <p className="text-slate-500 text-sm font-medium">
-        {isRegistration ? '¿Ya tienes una cuenta?' : '¿No tienes una cuenta?'}
+        {isRegistration ? 'Already have an account?' : "Don't have an account?"}
       </p>
       <button
         onClick={() => setIsRegistration(!isRegistration)}
         className="mt-2 text-indigo-600 font-bold hover:text-indigo-800 transition-colors text-sm underline underline-offset-4 decoration-2 decoration-indigo-100 hover:decoration-indigo-600"
       >
-        {isRegistration ? 'Inicia sesión aquí' : 'Crea una cuenta ahora'}
+        {isRegistration ? 'Sign in here' : 'Create an account now'}
       </button>
     </div>
   </div>

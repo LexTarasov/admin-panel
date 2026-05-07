@@ -71,14 +71,14 @@ const [error, setError] = useState(null);
       {/* Header Section */}
       <div className="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-4">
         <div>
-          <h1 className="text-2xl text-slate-800 font-black tracking-tight">Productos</h1>
-          <p className="text-sm text-slate-500 mt-1">Gestiona tu inventario y disponibilidad</p>
+          <h1 className="text-2xl text-slate-800 font-black tracking-tight">Products</h1>
+          <p className="text-sm text-slate-500 mt-1">Manage your inventory and availability</p>
         </div>
         <button
           className="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2.5 rounded-xl text-sm font-bold shadow-lg shadow-indigo-100 transition-all transform active:scale-95 flex items-center justify-center gap-2"
           onClick={() => setShowModal({ type: "create", product: "" })}
         >
-          <span className="text-lg">+</span> Nuevo Producto
+          <span className="text-lg">+</span> New Product
         </button>
       </div>
 
@@ -88,13 +88,13 @@ const [error, setError] = useState(null);
           <thead className="bg-slate-50/50 border-b border-slate-100">
             <tr>
               <th className="text-left text-[10px] font-bold text-slate-500 uppercase tracking-widest px-4 py-3">
-                Nombre
+                Name
               </th>
               <th className="text-left text-[10px] font-bold text-slate-500 uppercase tracking-widest px-4 py-3">
-                Categoría
+                Category
               </th>
               <th className="text-left text-[10px] font-bold text-slate-500 uppercase tracking-widest px-4 py-3">
-                Precio
+                Price
               </th>
               <th className="text-left text-[10px] font-bold text-slate-500 uppercase tracking-widest px-4 py-3">
                 Stock
@@ -103,7 +103,7 @@ const [error, setError] = useState(null);
                 Status
               </th>
               <th className="text-right text-[10px] font-bold text-slate-500 uppercase tracking-widest px-4 py-3">
-                Acciones
+                Actions
               </th>
             </tr>
           </thead>
@@ -113,7 +113,7 @@ const [error, setError] = useState(null);
                 <td colSpan={6} className="text-center py-20">
                   <div className="flex flex-col items-center gap-3">
                     <div className="w-6 h-6 border-2 border-indigo-600 border-t-transparent rounded-full animate-spin"></div>
-                    <span className="text-xs text-slate-400 font-medium">Sincronizando inventario...</span>
+                    <span className="text-xs text-slate-400 font-medium">Syncing inventory...</span>
                   </div>
                 </td>
               </tr>
@@ -123,8 +123,8 @@ const [error, setError] = useState(null);
               <tr>
                 <td colSpan={6} className="text-center py-20 text-slate-400">
                   <div className="flex flex-col items-center gap-2">
-                    <p className="text-sm font-semibold">No hay productos registrados</p>
-                    <p className="text-xs">Comienza agregando tu primer artículo al catálogo.</p>
+                    <p className="text-sm font-semibold">No products registered</p>
+                    <p className="text-xs">Start by adding your first item to the catalog.</p>
                   </div>
                 </td>
               </tr>
@@ -148,7 +148,7 @@ const [error, setError] = useState(null);
                 </td>
                 <td className="px-4 py-2.5 text-xs">
                   <span className={`font-medium ${product.stock < 5 ? 'text-rose-500' : 'text-slate-500'}`}>
-                    {product.stock} unidades
+                    {product.stock} units
                   </span>
                 </td>
                 <td className="px-4 py-2.5">
@@ -160,7 +160,7 @@ const [error, setError] = useState(null);
                     }`}
                   >
                     <span className={`w-1.5 h-1.5 rounded-full mr-1.5 ${product.status ? 'bg-emerald-500' : 'bg-slate-400'}`}></span>
-                    {product.status ? "ACTIVO" : "INACTIVO"}
+                    {product.status ? "ACTIVE" : "INACTIVE"}
                   </span>
                 </td>
                 <td className="px-4 py-2.5 text-right">
@@ -169,13 +169,13 @@ const [error, setError] = useState(null);
                       className="text-indigo-600 hover:text-indigo-900 font-bold text-[11px] transition-colors"
                       onClick={() => setShowModal({ type: "edit", product: product })}
                     >
-                      Editar
+                      Edit
                     </button>
                     <button
                       className="text-rose-500 hover:text-rose-700 font-bold text-[11px] transition-colors"
                       onClick={() => setShowModal({ type: "delete", product: product })}
                     >
-                      Eliminar
+                      Delete
                     </button>
                   </div>
                 </td>
@@ -208,9 +208,9 @@ const [error, setError] = useState(null);
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
               </svg>
             </div>
-            <h2 className="text-xl font-bold text-slate-900 mb-2">¿Eliminar producto?</h2>
+            <h2 className="text-xl font-bold text-slate-900 mb-2">Delete product?</h2>
             <p className="text-sm text-slate-500 mb-8 max-w-xs mx-auto">
-              Esta acción quitará el producto de la tienda de forma permanente.
+              This action will permanently remove the product from the store.
             </p>
             <div className="flex flex-col gap-2">
               <button
@@ -219,7 +219,7 @@ const [error, setError] = useState(null);
                 disabled={isProcessing}
                 className="w-full py-3 text-sm font-bold text-white bg-rose-600 hover:bg-rose-700 rounded-xl shadow-lg shadow-rose-100 transition-all disabled:opacity-50"
               >
-                Confirmar Eliminación
+                Confirm Deletion
               </button>
               <button
                 type="button"
@@ -227,7 +227,7 @@ const [error, setError] = useState(null);
                 disabled={isProcessing}
                 className="w-full py-3 text-sm font-bold text-slate-500 hover:bg-slate-100 rounded-xl transition-colors"
               >
-                Mantener Producto
+                Keep Product
               </button>
             </div>
           </div>

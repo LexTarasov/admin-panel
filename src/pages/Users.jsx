@@ -83,10 +83,10 @@ export default function Users() {
         <div className="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-4">
           <div>
             <h1 className="text-2xl text-slate-900 font-bold tracking-tight">
-              Usuarios
+              Users
             </h1>
             <p className="text-sm text-slate-500 mt-1">
-              Administra los accesos y roles de tu plataforma
+              Manage access and roles on your platform
             </p>
           </div>
         </div>
@@ -98,19 +98,19 @@ export default function Users() {
               <thead className="bg-slate-50/50">
                 <tr>
                   <th className="text-left text-xs font-semibold text-slate-500 uppercase tracking-wider px-6 py-4">
-                    Nombre
+                    Name
                   </th>
                   <th className="text-left text-xs font-semibold text-slate-500 uppercase tracking-wider px-6 py-4">
                     Email
                   </th>
                   <th className="text-left text-xs font-semibold text-slate-500 uppercase tracking-wider px-6 py-4">
-                    Rol
+                    Role
                   </th>
                   <th className="text-left text-xs font-semibold text-slate-500 uppercase tracking-wider px-6 py-4">
-                    Estado
+                    Status
                   </th>
                   <th className="text-right text-xs font-semibold text-slate-500 uppercase tracking-wider px-6 py-4">
-                    Acciones
+                    Actions
                   </th>
                 </tr>
               </thead>
@@ -121,7 +121,7 @@ export default function Users() {
                       <div className="flex flex-col items-center gap-2">
                         <div className="w-8 h-8 border-3 border-indigo-600 border-t-transparent rounded-full animate-spin"></div>
                         <span className="text-sm text-slate-400 font-medium">
-                          Cargando Usuarios...
+                          Loading users...
                         </span>
                       </div>
                     </td>
@@ -136,10 +136,10 @@ export default function Users() {
                     >
                       <div className="flex flex-col items-center gap-1">
                         <p className="text-sm font-medium">
-                          No hay usuarios registrados
+                          No users registered
                         </p>
                         <p className="text-xs">
-                          Los nuevos usuarios aparecerán aquí automáticamente.
+                          New users will appear here automatically.
                         </p>
                       </div>
                     </td>
@@ -173,7 +173,7 @@ export default function Users() {
                         <span
                           className={`w-1.5 h-1.5 rounded-full mr-1.5 ${user.is_active ? "bg-emerald-500" : "bg-slate-400"}`}
                         ></span>
-                        {user.is_active ? "Activo" : "Inactivo"}
+                        {user.is_active ? "Active" : "Inactive"}
                       </span>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
@@ -184,7 +184,7 @@ export default function Users() {
                             setShowModal({ type: "edit", user: user })
                           }
                         >
-                          Editar
+                          Edit
                         </button>
                         <button
                           className="text-rose-500 hover:text-rose-700 transition-colors font-bold text-xs"
@@ -192,7 +192,7 @@ export default function Users() {
                             setShowModal({ type: "delete", user: user })
                           }
                         >
-                          Eliminar
+                          Delete
                         </button>
                       </div>
                     </td>
@@ -208,16 +208,16 @@ export default function Users() {
           <Modal handleCloseModal={handleCloseModal}>
             <div className="p-4">
               <h2 className="text-lg font-bold text-slate-900 mb-1">
-                Editar Usuario
+                Edit User
               </h2>
               <p className="text-sm text-slate-500 mb-6">
-                Actualiza el rol y estado de acceso del usuario.
+                Update the user's role and access status.
               </p>
 
               <form className="space-y-5" onSubmit={handleSubmit}>
                 <div>
                   <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
-                    Rol de Usuario
+                    User Role
                   </label>
                   <select
                     name="role"
@@ -243,7 +243,7 @@ export default function Users() {
                     htmlFor="user-status"
                     className="text-sm text-slate-700 font-semibold cursor-pointer"
                   >
-                    Usuario Activo
+                    Active User
                   </label>
                 </div>
 
@@ -254,14 +254,14 @@ export default function Users() {
                     disabled={isProcessing}
                     className="px-5 py-2.5 text-xs font-bold text-slate-600 hover:bg-slate-100 rounded-xl transition-colors disabled:opacity-50"
                   >
-                    Cancelar
+                    Cancel
                   </button>
                   <button
                     type="submit"
                     disabled={isProcessing}
                     className="px-5 py-2.5 text-xs font-bold text-white bg-indigo-600 hover:bg-indigo-700 rounded-xl shadow-md shadow-indigo-100 transition-all disabled:opacity-50"
                   >
-                    {isProcessing ? "Guardando..." : "Guardar Cambios"}
+                    {isProcessing ? "Saving..." : "Save Changes"}
                   </button>
                 </div>
               </form>
@@ -290,11 +290,11 @@ export default function Users() {
                 </svg>
               </div>
               <h2 className="text-lg font-bold text-slate-900 mb-2">
-                Eliminar Usuario
+                Delete User
               </h2>
               <p className="text-sm text-slate-500 mb-8 max-w-xs mx-auto">
-                ¿Estás seguro? Esta acción eliminará permanentemente la cuenta y
-                no podrá recuperarse.
+                Are you sure? This action will permanently delete the account
+                and cannot be undone.
               </p>
               <div className="flex flex-col gap-2">
                 <button
@@ -303,7 +303,7 @@ export default function Users() {
                   disabled={isProcessing}
                   className="w-full py-3 text-sm font-bold text-white bg-rose-600 hover:bg-rose-700 rounded-xl shadow-lg shadow-rose-100 transition-all disabled:opacity-50"
                 >
-                  Eliminar Permanentemente
+                  Delete Permanently
                 </button>
                 <button
                   type="button"
@@ -311,7 +311,7 @@ export default function Users() {
                   disabled={isProcessing}
                   className="w-full py-3 text-sm font-bold text-slate-500 hover:bg-slate-100 rounded-xl transition-colors"
                 >
-                  Cancelar
+                  Cancel
                 </button>
               </div>
             </div>

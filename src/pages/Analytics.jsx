@@ -119,12 +119,12 @@ const usersByStatus = Object.entries(usersGroupedByStatus).map(([status, total])
       <div className="mb-8">
         <h1 className="text-2xl font-bold text-gray-900">Analytics</h1>
         <p className="text-sm text-gray-500 mt-1">
-          Resumen visual de tu negocio
+          Visual summary of your business
         </p>
       </div>
 
       {isLoading ? (
-        <p className="text-gray-400">Cargando datos...</p>
+        <p className="text-gray-400">Loading data...</p>
       ) : (
         <div className="space-y-8">
           {/* Fila 1 — dos gráficas lado a lado */}
@@ -133,7 +133,7 @@ const usersByStatus = Object.entries(usersGroupedByStatus).map(([status, total])
         {/* Gráfica 1 — Productos por categoría */}
         <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
             <h2 className="text-lg font-semibold text-gray-800 mb-6">
-                Productos por Categoría
+                Products by Category
             </h2>
             <ResponsiveContainer width="100%" height={300}>
                 <BarChart data={productsByCategory}>
@@ -155,7 +155,7 @@ const usersByStatus = Object.entries(usersGroupedByStatus).map(([status, total])
         {/* Gráfica 2 — Usuarios por rol */}
         <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
             <h2 className="text-lg font-semibold text-gray-800 mb-6">
-                Distribución de Roles
+                Role Distribution
             </h2>
             <ResponsiveContainer width="100%" height={300}>
                 <PieChart>
@@ -187,7 +187,7 @@ const usersByStatus = Object.entries(usersGroupedByStatus).map(([status, total])
     <div className="grid grid-cols-2 gap-8">
         <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
             <h2 className="text-lg font-semibold text-gray-800 mb-6">
-                Usuarios Activos vs Inactivos
+                Active vs Inactive Users
             </h2>
             <ResponsiveContainer width="100%" height={300}>
                 <BarChart data={usersByStatus}>

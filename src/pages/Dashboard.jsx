@@ -10,32 +10,32 @@ export default function Dashboard() {
 
   const cards = [
     {
-      title: " Productos",
+      title: "Products",
       value: totalProducts,
       icon: "📦",
       color: "bg-blue-500",
     },
     {
-      title: " Usuarios",
+      title: "Users",
       value: totalUsers,
       icon: "👥",
       color: "bg-purple-500",
     },
     {
-      title: "Stock Bajo",
+      title: "Low Stock",
       value: lowStock,
       icon: "⚠️",
       color: "bg-yellow-500",
     },
     {
-      title: "Usuarios Activos",
+      title: "Active Users",
       value: activeUsers,
       icon: "✅",
       color: "bg-green-500",
     },
   ];
 
-  if (isLoading) return <p className="p-8 text-gray-400">Cargando...</p>;
+  if (isLoading) return <p className="p-8 text-gray-400">Loading...</p>;
 
   return (
     <div className="flex-1 p-4 md:p-8 bg-slate-50 min-h-screen font-sans">
@@ -45,7 +45,7 @@ export default function Dashboard() {
           Dashboard
         </h1>
         <p className="text-sm text-slate-500 mt-1">
-          Resumen general del estado de tu plataforma
+          General overview of your platform
         </p>
       </div>
 
