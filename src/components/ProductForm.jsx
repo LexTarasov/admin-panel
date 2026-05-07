@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
+import { useAppConfig } from "../context/AppConfigContext";
 
 export default function ProductForm({ product, onSave, onCancel, error }) {
+  const { t } = useAppConfig();
   const [formData, setFormData] = useState({
     id: null,
     name: "",
@@ -48,16 +50,13 @@ export default function ProductForm({ product, onSave, onCancel, error }) {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
-      <h2 className="text-2xl font-bold text-gray-900 mb-6">
-        {formData.id ? "Edit Product" : "Create New Product"}
+      <h2 className="text-2xl font-bold text-gray-900 dark:text-slate-100 mb-6">
+        {formData.id ? t('form.editProduct') : t('form.createProduct')}
       </h2>
 
       <div>
-        <label
-          htmlFor="name"
-          className="block text-sm font-medium text-gray-700 mb-1"
-        >
-          Name
+        <label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-1">
+          {t('form.name')}
         </label>
         <input
           type="text"
@@ -65,29 +64,24 @@ export default function ProductForm({ product, onSave, onCancel, error }) {
           name="name"
           value={formData.name}
           onChange={handleChange}
-          className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-         required
+          required
+          className="w-full px-3 py-2 border border-gray-300 dark:border-slate-600 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-slate-700 text-gray-900 dark:text-slate-100"
         />
       </div>
 
       <div>
-        <label
-          htmlFor="category"
-          className="block text-sm font-medium text-gray-700 mb-1"
-        >
-          Category
+        <label htmlFor="category" className="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-1">
+          {t('form.category')}
         </label>
         <select
           id="category"
           name="category"
           value={formData.category}
           onChange={handleChange}
-          className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 bg-white"
           required
+          className="w-full px-3 py-2 border border-gray-300 dark:border-slate-600 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-slate-700 text-gray-900 dark:text-slate-100"
         >
-          <option value="" disabled>
-            Select a category
-          </option>
+          <option value="" disabled>{t('form.selectCategory')}</option>
           <option value="shoes">shoes</option>
           <option value="electronics">electronics</option>
           <option value="clothing">clothing</option>
@@ -95,11 +89,8 @@ export default function ProductForm({ product, onSave, onCancel, error }) {
       </div>
 
       <div>
-        <label
-          htmlFor="price"
-          className="block text-sm font-medium text-gray-700 mb-1"
-        >
-          Price
+        <label htmlFor="price" className="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-1">
+          {t('form.price')}
         </label>
         <input
           type="number"
@@ -107,19 +98,16 @@ export default function ProductForm({ product, onSave, onCancel, error }) {
           name="price"
           value={formData.price}
           onChange={handleChange}
-          className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
           required
           min="0"
           step="0.01"
+          className="w-full px-3 py-2 border border-gray-300 dark:border-slate-600 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-slate-700 text-gray-900 dark:text-slate-100"
         />
       </div>
 
       <div>
-        <label
-          htmlFor="stock"
-          className="block text-sm font-medium text-gray-700 mb-1"
-        >
-          Stock
+        <label htmlFor="stock" className="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-1">
+          {t('form.stock')}
         </label>
         <input
           type="number"
@@ -127,9 +115,9 @@ export default function ProductForm({ product, onSave, onCancel, error }) {
           name="stock"
           value={formData.stock}
           onChange={handleChange}
-          className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
           required
           min="0"
+          className="w-full px-3 py-2 border border-gray-300 dark:border-slate-600 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-slate-700 text-gray-900 dark:text-slate-100"
         />
       </div>
 
@@ -142,28 +130,30 @@ export default function ProductForm({ product, onSave, onCancel, error }) {
           onChange={handleChange}
           className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
         />
-        <label htmlFor="status" className="ml-2 block text-sm text-gray-900">
-          Active
+        <label htmlFor="status" className="ml-2 block text-sm text-gray-900 dark:text-slate-300">
+          {t('form.active')}
         </label>
       </div>
+
       {error && (
-        <div className="p-3 bg-red-50 border border-red-100 text-red-600 rounded-lg text-sm">
+        <div className="p-3 bg-red-50 dark:bg-red-950/40 border border-red-100 dark:border-red-900 text-red-600 dark:text-red-400 rounded-lg text-sm">
           ⚠️ {error}
         </div>
       )}
+
       <div className="flex justify-end gap-3 mt-6">
         <button
           type="button"
           onClick={onCancel}
-          className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-md hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
+          className="px-4 py-2 text-sm font-medium text-gray-700 dark:text-slate-300 bg-gray-100 dark:bg-slate-700 rounded-md hover:bg-gray-200 dark:hover:bg-slate-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
         >
-          Cancel
+          {t('form.cancel')}
         </button>
         <button
           type="submit"
           className="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
         >
-          {product ? "Save Changes" : "Create Product"}
+          {product ? t('form.saveChanges') : t('form.createBtn')}
         </button>
       </div>
     </form>

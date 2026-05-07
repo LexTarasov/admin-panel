@@ -3,17 +3,20 @@ import { createRoot } from "react-dom/client";
 import "./index.css";
 import App from "./App.jsx";
 import { AuthProvider } from "./context/Authcontext.jsx";
+import { AppConfigProvider } from "./context/AppConfigContext.jsx";
 import DataProvider from "./context/DataContext.jsx";
 import { BrowserRouter } from "react-router-dom";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <AuthProvider>
-      <DataProvider>
-        <BrowserRouter>
-          <App />
-        </BrowserRouter>
-      </DataProvider>
+      <AppConfigProvider>
+        <DataProvider>
+          <BrowserRouter>
+            <App />
+          </BrowserRouter>
+        </DataProvider>
+      </AppConfigProvider>
     </AuthProvider>
   </StrictMode>,
 );

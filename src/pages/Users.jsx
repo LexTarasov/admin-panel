@@ -2,9 +2,11 @@ import { useState, useEffect } from "react";
 import api from "../utils/axios";
 import Modal from "../components/Modal";
 import { useData } from "../context/DataContext";
+import { useAppConfig } from "../context/AppConfigContext";
 
 export default function Users() {
   const { users, fetchUsers, isLoading } = useData();
+  const { t } = useAppConfig();
   const [showModal, setShowModal] = useState({ type: null, user: null });
   const [formData, setFormData] = useState({
     id: null,
@@ -78,50 +80,50 @@ export default function Users() {
 
   return (
     <>
-      <div className="flex-1 p-4 md:p-8 bg-slate-50 min-h-screen font-sans">
+      <div className="flex-1 p-4 md:p-8 bg-slate-50 dark:bg-slate-900 min-h-screen font-sans">
         {/* Header Section */}
         <div className="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-4">
           <div>
-            <h1 className="text-2xl text-slate-900 font-bold tracking-tight">
-              Users
+            <h1 className="text-2xl text-slate-900 dark:text-slate-100 font-bold tracking-tight">
+              {t('users.title')}
             </h1>
-            <p className="text-sm text-slate-500 mt-1">
-              Manage access and roles on your platform
+            <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">
+              {t('users.subtitle')}
             </p>
           </div>
         </div>
 
         {/* Main Table Card */}
-        <div className="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+        <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 overflow-hidden">
           <div className="overflow-x-auto">
-            <table className="w-full min-w-full divide-y divide-slate-200">
-              <thead className="bg-slate-50/50">
+            <table className="w-full min-w-full divide-y divide-slate-200 dark:divide-slate-700">
+              <thead className="bg-slate-50/50 dark:bg-slate-700/50">
                 <tr>
-                  <th className="text-left text-xs font-semibold text-slate-500 uppercase tracking-wider px-6 py-4">
-                    Name
+                  <th className="text-left text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider px-6 py-4">
+                    {t('users.colName')}
                   </th>
-                  <th className="text-left text-xs font-semibold text-slate-500 uppercase tracking-wider px-6 py-4">
-                    Email
+                  <th className="text-left text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider px-6 py-4">
+                    {t('users.colEmail')}
                   </th>
-                  <th className="text-left text-xs font-semibold text-slate-500 uppercase tracking-wider px-6 py-4">
-                    Role
+                  <th className="text-left text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider px-6 py-4">
+                    {t('users.colRole')}
                   </th>
-                  <th className="text-left text-xs font-semibold text-slate-500 uppercase tracking-wider px-6 py-4">
-                    Status
+                  <th className="text-left text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider px-6 py-4">
+                    {t('users.colStatus')}
                   </th>
-                  <th className="text-right text-xs font-semibold text-slate-500 uppercase tracking-wider px-6 py-4">
-                    Actions
+                  <th className="text-right text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider px-6 py-4">
+                    {t('users.colActions')}
                   </th>
                 </tr>
               </thead>
-              <tbody className="bg-white divide-y divide-slate-100">
+              <tbody className="bg-white dark:bg-slate-800 divide-y divide-slate-100 dark:divide-slate-700">
                 {isLoading && (
                   <tr>
                     <td colSpan={5} className="text-center py-16">
                       <div className="flex flex-col items-center gap-2">
                         <div className="w-8 h-8 border-3 border-indigo-600 border-t-transparent rounded-full animate-spin"></div>
                         <span className="text-sm text-slate-400 font-medium">
-                          Loading users...
+                          {t('users.loading')}
                         </span>
                       </div>
                     </td>
@@ -130,17 +132,10 @@ export default function Users() {
 
                 {!isLoading && users.length === 0 && (
                   <tr>
-                    <td
-                      colSpan={5}
-                      className="text-center py-16 text-slate-400"
-                    >
+                    <td colSpan={5} className="text-center py-16 text-slate-400">
                       <div className="flex flex-col items-center gap-1">
-                        <p className="text-sm font-medium">
-                          No users registered
-                        </p>
-                        <p className="text-xs">
-                          New users will appear here automatically.
-                        </p>
+                        <p className="text-sm font-medium">{t('users.empty')}</p>
+                        <p className="text-xs">{t('users.emptyHint')}</p>
                       </div>
                     </td>
                   </tr>
@@ -149,16 +144,16 @@ export default function Users() {
                 {users.map((user) => (
                   <tr
                     key={user.id}
-                    className="hover:bg-slate-50/80 transition-all duration-200 ease-in-out"
+                    className="hover:bg-slate-50/80 dark:hover:bg-slate-700/40 transition-all duration-200 ease-in-out"
                   >
-                    <td className="px-6 py-4 whitespace-nowrap text-sm font-semibold text-slate-900">
+                    <td className="px-6 py-4 whitespace-nowrap text-sm font-semibold text-slate-900 dark:text-slate-100">
                       {user.name}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-500">
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-500 dark:text-slate-400">
                       {user.email}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-700">
-                      <span className="px-2.5 py-1 bg-slate-100 text-slate-600 rounded-lg text-[11px] font-bold uppercase tracking-tight border border-slate-200">
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-700 dark:text-slate-300">
+                      <span className="px-2.5 py-1 bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 rounded-lg text-[11px] font-bold uppercase tracking-tight border border-slate-200 dark:border-slate-600">
                         {user.role}
                       </span>
                     </td>
@@ -166,33 +161,29 @@ export default function Users() {
                       <span
                         className={`inline-flex items-center text-[11px] font-bold px-2.5 py-1 rounded-full border ${
                           user.is_active
-                            ? "bg-emerald-50 text-emerald-700 border-emerald-100"
-                            : "bg-slate-100 text-slate-500 border-slate-200"
+                            ? "bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-400 border-emerald-100 dark:border-emerald-900"
+                            : "bg-slate-100 dark:bg-slate-700 text-slate-500 dark:text-slate-400 border-slate-200 dark:border-slate-600"
                         }`}
                       >
                         <span
                           className={`w-1.5 h-1.5 rounded-full mr-1.5 ${user.is_active ? "bg-emerald-500" : "bg-slate-400"}`}
                         ></span>
-                        {user.is_active ? "Active" : "Inactive"}
+                        {user.is_active ? t('users.active') : t('users.inactive')}
                       </span>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                       <div className="flex justify-end gap-4">
                         <button
-                          className="text-indigo-600 hover:text-indigo-900 transition-colors font-bold text-xs"
-                          onClick={() =>
-                            setShowModal({ type: "edit", user: user })
-                          }
+                          className="text-indigo-600 hover:text-indigo-900 dark:hover:text-indigo-400 transition-colors font-bold text-xs"
+                          onClick={() => setShowModal({ type: "edit", user: user })}
                         >
-                          Edit
+                          {t('users.edit')}
                         </button>
                         <button
                           className="text-rose-500 hover:text-rose-700 transition-colors font-bold text-xs"
-                          onClick={() =>
-                            setShowModal({ type: "delete", user: user })
-                          }
+                          onClick={() => setShowModal({ type: "delete", user: user })}
                         >
-                          Delete
+                          {t('users.delete')}
                         </button>
                       </div>
                     </td>
@@ -207,30 +198,30 @@ export default function Users() {
         {showModal.type === "edit" && (
           <Modal handleCloseModal={handleCloseModal}>
             <div className="p-4">
-              <h2 className="text-lg font-bold text-slate-900 mb-1">
-                Edit User
+              <h2 className="text-lg font-bold text-slate-900 dark:text-slate-100 mb-1">
+                {t('users.editTitle')}
               </h2>
-              <p className="text-sm text-slate-500 mb-6">
-                Update the user's role and access status.
+              <p className="text-sm text-slate-500 dark:text-slate-400 mb-6">
+                {t('users.editSubtitle')}
               </p>
 
               <form className="space-y-5" onSubmit={handleSubmit}>
                 <div>
-                  <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
-                    User Role
+                  <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-2">
+                    {t('users.userRole')}
                   </label>
                   <select
                     name="role"
                     value={formData.role}
                     onChange={handleChange}
-                    className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl shadow-sm focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all text-sm"
+                    className="w-full px-4 py-2.5 bg-slate-50 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-xl shadow-sm focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all text-sm text-slate-900 dark:text-slate-100"
                   >
                     <option value="Admin">Admin</option>
                     <option value="User">User</option>
                   </select>
                 </div>
 
-                <div className="flex items-center gap-3 p-4 bg-slate-50 rounded-xl border border-slate-200 cursor-pointer hover:bg-slate-100 transition-colors">
+                <div className="flex items-center gap-3 p-4 bg-slate-50 dark:bg-slate-700/50 rounded-xl border border-slate-200 dark:border-slate-600 cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors">
                   <input
                     type="checkbox"
                     id="user-status"
@@ -241,27 +232,27 @@ export default function Users() {
                   />
                   <label
                     htmlFor="user-status"
-                    className="text-sm text-slate-700 font-semibold cursor-pointer"
+                    className="text-sm text-slate-700 dark:text-slate-300 font-semibold cursor-pointer"
                   >
-                    Active User
+                    {t('users.activeUser')}
                   </label>
                 </div>
 
-                <div className="flex justify-end gap-3 mt-8 pt-4 border-t border-slate-100">
+                <div className="flex justify-end gap-3 mt-8 pt-4 border-t border-slate-100 dark:border-slate-700">
                   <button
                     type="button"
                     onClick={handleCloseModal}
                     disabled={isProcessing}
-                    className="px-5 py-2.5 text-xs font-bold text-slate-600 hover:bg-slate-100 rounded-xl transition-colors disabled:opacity-50"
+                    className="px-5 py-2.5 text-xs font-bold text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-xl transition-colors disabled:opacity-50"
                   >
-                    Cancel
+                    {t('users.cancel')}
                   </button>
                   <button
                     type="submit"
                     disabled={isProcessing}
                     className="px-5 py-2.5 text-xs font-bold text-white bg-indigo-600 hover:bg-indigo-700 rounded-xl shadow-md shadow-indigo-100 transition-all disabled:opacity-50"
                   >
-                    {isProcessing ? "Saving..." : "Save Changes"}
+                    {isProcessing ? t('users.saving') : t('users.saveChanges')}
                   </button>
                 </div>
               </form>
@@ -289,12 +280,11 @@ export default function Users() {
                   />
                 </svg>
               </div>
-              <h2 className="text-lg font-bold text-slate-900 mb-2">
-                Delete User
+              <h2 className="text-lg font-bold text-slate-900 dark:text-slate-100 mb-2">
+                {t('users.deleteTitle')}
               </h2>
-              <p className="text-sm text-slate-500 mb-8 max-w-xs mx-auto">
-                Are you sure? This action will permanently delete the account
-                and cannot be undone.
+              <p className="text-sm text-slate-500 dark:text-slate-400 mb-8 max-w-xs mx-auto">
+                {t('users.deleteMessage')}
               </p>
               <div className="flex flex-col gap-2">
                 <button
@@ -303,15 +293,15 @@ export default function Users() {
                   disabled={isProcessing}
                   className="w-full py-3 text-sm font-bold text-white bg-rose-600 hover:bg-rose-700 rounded-xl shadow-lg shadow-rose-100 transition-all disabled:opacity-50"
                 >
-                  Delete Permanently
+                  {t('users.deletePermanently')}
                 </button>
                 <button
                   type="button"
                   onClick={handleCloseModal}
                   disabled={isProcessing}
-                  className="w-full py-3 text-sm font-bold text-slate-500 hover:bg-slate-100 rounded-xl transition-colors"
+                  className="w-full py-3 text-sm font-bold text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-xl transition-colors"
                 >
-                  Cancel
+                  {t('users.cancel')}
                 </button>
               </div>
             </div>

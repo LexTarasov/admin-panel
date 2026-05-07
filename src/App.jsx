@@ -8,6 +8,7 @@ import Dashboard from "./pages/Dashboard";
 import Users from "./pages/Users";
 import Products from "./pages/Products";
 import Analytics from "./pages/Analytics";
+import Settings from "./pages/Settings";
 
 function App() {
   const { globalUser, isLoading } = useAuth();
@@ -33,7 +34,7 @@ function App() {
   }
 
   return (
-    <div className="flex h-full w-full overflow-hidden bg-slate-100">
+    <div className="flex h-full w-full overflow-hidden bg-slate-100 dark:bg-slate-900">
       <Sidebar />
       <main className="flex-1 overflow-y-auto scrollbar-hide">
         <ProtectedRoute canActivate={!!globalUser} redirectPath="/">
@@ -49,6 +50,7 @@ function App() {
             />
             <Route path="/products" element={<Products />} />
             <Route path="/analytics" element={<Analytics />} />
+            <Route path="/settings" element={<Settings />} />
           </Routes>
         </ProtectedRoute>
       </main>
