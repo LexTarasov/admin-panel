@@ -19,8 +19,8 @@ export function AuthProvider(props) {
             localStorage.setItem('authToken', authToken)
             await fetchCurrentUser(authToken)
         } catch (err) {
-            console.log(err.message)
-            throw err // importante: re-lanzamos el error para manejarlo en el componente
+            const message = err.response?.data?.message ?? err.message
+            throw new Error(message, { cause: err })
         }
     }
 
@@ -31,8 +31,8 @@ export function AuthProvider(props) {
             localStorage.setItem('authToken', authToken)
             await fetchCurrentUser(authToken)
         } catch (err) {
-            console.log(err.message)
-            throw err
+            const message = err.response?.data?.message ?? err.message
+            throw new Error(message, { cause: err })
         }
     }
 
