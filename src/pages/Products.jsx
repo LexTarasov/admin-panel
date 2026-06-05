@@ -77,7 +77,7 @@ export default function Products() {
           <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">{t('products.subtitle')}</p>
         </div>
         <button
-          className="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2.5 rounded-xl text-sm font-bold shadow-lg shadow-indigo-100 transition-all transform active:scale-95 flex items-center justify-center gap-2"
+          className="bg-indigo-500 hover:bg-indigo-700 text-white px-6 py-2.5 rounded-xl text-sm font-bold shadow-lg transition-all transform active:scale-95 flex items-center justify-center gap-2"
           onClick={() => setShowModal({ type: "create", product: "" })}
         >
           <span className="text-lg">+</span> {t('products.newProduct')}
@@ -219,7 +219,7 @@ export default function Products() {
                 type="button"
                 onClick={() => handleDeleteProduct(showModal.product)}
                 disabled={isProcessing}
-                className="w-full py-3 text-sm font-bold text-white bg-rose-600 hover:bg-rose-700 rounded-xl shadow-lg shadow-rose-100 transition-all disabled:opacity-50"
+                className="w-full py-3 text-sm font-bold text-white bg-rose-600 hover:bg-rose-700 rounded-xl shadow-lg transition-all disabled:opacity-50"
               >
                 {t('products.confirmDelete')}
               </button>
