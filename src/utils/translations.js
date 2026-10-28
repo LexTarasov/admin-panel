@@ -41,6 +41,16 @@ export const translations = {
     'products.deleteMessage': 'This action will permanently remove the product from the store.',
     'products.confirmDelete': 'Confirm Deletion',
     'products.keepProduct': 'Keep Product',
+    'pagination.previous': 'Previous',
+    'pagination.next': 'Next',
+    'pagination.page': 'Page',
+    'pagination.of': 'of',
+    'demo.title': 'Demo access',
+    'demo.subtitle': 'Use these credentials to explore the panel.',
+    'demo.admin': 'Admin',
+    'demo.user': 'User',
+    'demo.copy': 'Copy',
+    'demo.copied': 'Copied!',
 
     // Users page
     'users.title': 'Users',
@@ -160,6 +170,16 @@ export const translations = {
     'products.deleteMessage': 'Esta acción quitará el producto de la tienda de forma permanente.',
     'products.confirmDelete': 'Confirmar Eliminación',
     'products.keepProduct': 'Mantener Producto',
+    'pagination.previous': 'Anterior',
+    'pagination.next': 'Siguiente',
+    'pagination.page': 'Página',
+    'pagination.of': 'de',
+    'demo.title': 'Acceso de prueba',
+    'demo.subtitle': 'Usa estas credenciales para explorar el panel.',
+    'demo.admin': 'Administrador',
+    'demo.user': 'Usuario',
+    'demo.copy': 'Copiar',
+    'demo.copied': '¡Copiado!',
 
     // Users page
     'users.title': 'Usuarios',
