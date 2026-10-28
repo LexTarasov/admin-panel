@@ -1,9 +1,11 @@
+import { useState } from "react";
 import Authentication from "./pages/Authentication";
+import DemoCredentials from "./components/DemoCredentials";
 import "./App.css";
 import { useAuth } from "./context/Authcontext";
 import Sidebar from "./components/Sidebar";
 import ProtectedRoute from "./components/ProtectedRoute";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import Dashboard from "./pages/Dashboard";
 import Users from "./pages/Users";
 import Products from "./pages/Products";
@@ -12,6 +14,8 @@ import Settings from "./pages/Settings";
 
 function App() {
   const { globalUser, isLoading } = useAuth();
+  // modo registro vive aqui para ocultar la tarjeta de demo al crear cuenta
+  const [isRegistration, setIsRegistration] = useState(false);
 
   if (isLoading) {
     return (
@@ -24,10 +28,15 @@ function App() {
 
   if (!globalUser) {
     return (
-      <div className="h-full w-full flex items-center justify-center bg-slate-950 p-6">
+      <div className="h-full w-full flex items-center justify-center bg-slate-950 p-6 overflow-y-auto">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-indigo-950/40 via-slate-950 to-slate-950 pointer-events-none" />
-        <div className="relative w-full max-w-md">
-          <Authentication handleCloseModal={() => {}} />
+        <div className="relative w-full max-w-3xl flex flex-col lg:flex-row items-center justify-center gap-6">
+          <Authentication
+            handleCloseModal={() => {}}
+            isRegistration={isRegistration}
+            setIsRegistration={setIsRegistration}
+          />
+          {!isRegistration && <DemoCredentials />}
         </div>
       </div>
     );
@@ -37,13 +46,14 @@ function App() {
     <div className="flex h-full w-full overflow-hidden bg-slate-100 dark:bg-slate-900">
       <Sidebar />
       <main className="flex-1 overflow-y-auto scrollbar-hide">
-        <ProtectedRoute canActivate={!!globalUser} redirectPath="/">
+        <ProtectedRoute canActivate={!!globalUser} redirectPath="/dashboard">
           <Routes>
-            <Route path="/" element={<Dashboard />} />
+            <Route path="/" element={<Navigate to="/dashboard" replace />} />
+            <Route path="/dashboard" element={<Dashboard />} />
             <Route
               path="/users"
               element={
-                <ProtectedRoute canActivate={globalUser?.role === "Admin"} redirectPath="/">
+                <ProtectedRoute canActivate={globalUser?.role === "Admin"} redirectPath="/dashboard">
                   <Users />
                 </ProtectedRoute>
               }

@@ -10,12 +10,34 @@ import {
   Pie,
   Cell,
   Legend,
+  CartesianGrid,
 } from "recharts";
 import api from "../utils/axios";
 import { useAppConfig } from "../context/AppConfigContext";
 
-// colores para el pie chart
-const COLORS = ["#3b82f6", "#10b981", "#f59e0b", "#ef4444"];
+// paleta categorica validada (azul, naranja, aqua, amarillo)
+const COLORS = ["#3987e5", "#d95926", "#199e70", "#c98500"];
+
+// estilos compartidos para que las graficas se vean consistentes y limpias
+const AXIS_TICK = { fontSize: 11, fill: "#94a3b8" };
+const TOOLTIP_PROPS = {
+  contentStyle: {
+    background: "#0f172a",
+    border: "1px solid #334155",
+    borderRadius: 12,
+    fontSize: 12,
+    boxShadow: "0 10px 30px rgba(0,0,0,0.3)",
+  },
+  labelStyle: { color: "#94a3b8", fontWeight: 600, marginBottom: 4 },
+  itemStyle: { color: "#e2e8f0" },
+  cursor: { fill: "rgba(148,163,184,0.08)" },
+};
+
+// tarjeta flotante igual que el resto de la app
+const CARD_CLASS =
+  "bg-white dark:bg-slate-800/50 rounded-2xl p-5 border border-slate-200/70 dark:border-slate-700/50 shadow-lg shadow-slate-900/5 dark:shadow-black/20";
+const TITLE_CLASS =
+  "text-sm font-semibold text-slate-700 dark:text-slate-200 mb-4";
 
 export default function Analytics() {
   const [products, setProducts] = useState([]);
@@ -125,85 +147,76 @@ export default function Analytics() {
       {isLoading ? (
         <p className="text-gray-400">{t('analytics.loading')}</p>
       ) : (
-        <div className="space-y-8">
-          {/* Fila 1 — dos gráficas lado a lado */}
-          <div className="grid grid-cols-2 gap-8">
+        /* Las tres graficas en una sola fila */
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
 
-            {/* Gráfica 1 — Productos por categoría */}
-            <div className="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-gray-100 dark:border-slate-700 p-6">
-              <h2 className="text-lg font-semibold text-gray-800 dark:text-slate-200 mb-6">
-                {t('analytics.productsByCategory')}
-              </h2>
-              <ResponsiveContainer width="100%" height={300}>
-                <BarChart data={productsByCategory}>
-                  <XAxis dataKey="category" tick={{ fontSize: 12 }} />
-                  <YAxis />
-                  <Tooltip />
-                  <Bar dataKey="total" radius={[4, 4, 0, 0]}>
-                    {productsByCategory.map((entry, index) => (
-                      <Cell
-                        key={`cell-${index}`}
-                        fill={COLORS[index % COLORS.length]}
-                      />
-                    ))}
-                  </Bar>
-                </BarChart>
-              </ResponsiveContainer>
-            </div>
-
-            {/* Gráfica 2 — Usuarios por rol */}
-            <div className="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-gray-100 dark:border-slate-700 p-6">
-              <h2 className="text-lg font-semibold text-gray-800 dark:text-slate-200 mb-6">
-                {t('analytics.roleDistribution')}
-              </h2>
-              <ResponsiveContainer width="100%" height={300}>
-                <PieChart>
-                  <Pie
-                    data={usersByRole}
-                    dataKey="total"
-                    nameKey="category"
-                    cx="50%"
-                    cy="50%"
-                    outerRadius={100}
-                    label
-                  >
-                    {usersByRole.map((entry, index) => (
-                      <Cell
-                        key={`cell-${index}`}
-                        fill={entry.category === "Admin" ? "#10b981" : "#f59e0b"}
-                      />
-                    ))}
-                  </Pie>
-                  <Tooltip />
-                  <Legend />
-                </PieChart>
-              </ResponsiveContainer>
-            </div>
-
+          {/* Gráfica 1 — Productos por categoría */}
+          <div className={CARD_CLASS}>
+            <h2 className={TITLE_CLASS}>{t('analytics.productsByCategory')}</h2>
+            <ResponsiveContainer width="100%" height={240}>
+              <BarChart data={productsByCategory} margin={{ top: 8, right: 8, left: -16, bottom: 0 }}>
+                <CartesianGrid vertical={false} stroke="#64748b" strokeOpacity={0.15} />
+                <XAxis dataKey="category" tick={AXIS_TICK} axisLine={false} tickLine={false} />
+                <YAxis tick={AXIS_TICK} axisLine={false} tickLine={false} allowDecimals={false} width={32} />
+                <Tooltip {...TOOLTIP_PROPS} />
+                <Bar dataKey="total" radius={[6, 6, 0, 0]} maxBarSize={56}>
+                  {productsByCategory.map((entry, index) => (
+                    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                  ))}
+                </Bar>
+              </BarChart>
+            </ResponsiveContainer>
           </div>
 
-          {/* Fila 2 — gráfica de status usuarios, mitad del ancho */}
-          <div className="grid grid-cols-2 gap-8">
-            <div className="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-gray-100 dark:border-slate-700 p-6">
-              <h2 className="text-lg font-semibold text-gray-800 dark:text-slate-200 mb-6">
-                {t('analytics.activeVsInactive')}
-              </h2>
-              <ResponsiveContainer width="100%" height={300}>
-                <BarChart data={usersByStatus}>
-                  <XAxis dataKey="status" tick={{ fontSize: 12 }} />
-                  <YAxis />
-                  <Tooltip />
-                  <Bar dataKey="total" radius={[4, 4, 0, 0]}>
-                    {usersByStatus.map((entry, index) => (
-                      <Cell
-                        key={`cell-${index}`}
-                        fill={entry.status === "Activo" ? "#10b981" : "#ef4444"}
-                      />
-                    ))}
-                  </Bar>
-                </BarChart>
-              </ResponsiveContainer>
-            </div>
+          {/* Gráfica 2 — Usuarios por rol (donut) */}
+          <div className={CARD_CLASS}>
+            <h2 className={TITLE_CLASS}>{t('analytics.roleDistribution')}</h2>
+            <ResponsiveContainer width="100%" height={240}>
+              <PieChart>
+                <Pie
+                  data={usersByRole}
+                  dataKey="total"
+                  nameKey="category"
+                  cx="50%"
+                  cy="50%"
+                  innerRadius={52}
+                  outerRadius={82}
+                  paddingAngle={2}
+                  stroke="none"
+                  label={({ value }) => value}
+                >
+                  {usersByRole.map((entry, index) => (
+                    <Cell
+                      key={`cell-${index}`}
+                      fill={entry.category === "Admin" ? COLORS[2] : COLORS[1]}
+                    />
+                  ))}
+                </Pie>
+                <Tooltip {...TOOLTIP_PROPS} />
+                <Legend iconType="circle" wrapperStyle={{ fontSize: 12 }} />
+              </PieChart>
+            </ResponsiveContainer>
+          </div>
+
+          {/* Gráfica 3 — Usuarios activos vs inactivos */}
+          <div className={CARD_CLASS}>
+            <h2 className={TITLE_CLASS}>{t('analytics.activeVsInactive')}</h2>
+            <ResponsiveContainer width="100%" height={240}>
+              <BarChart data={usersByStatus} margin={{ top: 8, right: 8, left: -16, bottom: 0 }}>
+                <CartesianGrid vertical={false} stroke="#64748b" strokeOpacity={0.15} />
+                <XAxis dataKey="status" tick={AXIS_TICK} axisLine={false} tickLine={false} />
+                <YAxis tick={AXIS_TICK} axisLine={false} tickLine={false} allowDecimals={false} width={32} />
+                <Tooltip {...TOOLTIP_PROPS} />
+                <Bar dataKey="total" radius={[6, 6, 0, 0]} maxBarSize={56}>
+                  {usersByStatus.map((entry, index) => (
+                    <Cell
+                      key={`cell-${index}`}
+                      fill={entry.status === "Activo" ? COLORS[2] : "#e66767"}
+                    />
+                  ))}
+                </Bar>
+              </BarChart>
+            </ResponsiveContainer>
           </div>
 
         </div>

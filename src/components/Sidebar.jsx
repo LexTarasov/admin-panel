@@ -4,7 +4,7 @@ import { useAppConfig } from '../context/AppConfigContext'
 
 const navItems = [
   {
-    to: '/',
+    to: '/dashboard',
     end: true,
     key: 'nav.dashboard',
     icon: (
@@ -68,21 +68,21 @@ export default function Sidebar() {
     .toUpperCase()
 
   return (
-    <aside className="w-60 h-full bg-slate-900 border-r border-slate-800 flex flex-col shrink-0">
+    <aside className="w-60 h-full bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 flex flex-col shrink-0">
 
       {/* Logo */}
-      <div className="h-16 flex items-center gap-3 px-5 border-b border-slate-800">
+      <div className="h-16 flex items-center gap-3 px-5 border-b border-slate-200 dark:border-slate-800">
         <div className="w-7 h-7 bg-indigo-600 rounded-lg flex items-center justify-center shrink-0">
           <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
           </svg>
         </div>
-        <span className="text-white font-bold text-sm tracking-tight">AdminPanel</span>
+        <span className="text-slate-900 dark:text-white font-bold text-sm tracking-tight">AdminPanel</span>
       </div>
 
       {/* Nav label */}
       <div className="px-4 pt-6 pb-2">
-        <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest px-3">{t('nav.menu')}</p>
+        <p className="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest px-3">{t('nav.menu')}</p>
       </div>
 
       {/* Nav links */}
@@ -94,8 +94,8 @@ export default function Sidebar() {
             end={item.end}
             className={({ isActive }) =>
               isActive
-                ? 'flex items-center gap-3 px-3 py-2.5 rounded-xl bg-indigo-600 text-white text-sm font-semibold'
-                : 'flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-400 hover:text-slate-100 hover:bg-slate-800 text-sm font-medium transition-colors duration-150'
+                ? 'flex items-center gap-3 px-3 py-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-indigo-600 dark:text-indigo-400 text-sm font-semibold'
+                : 'flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-500 hover:text-slate-900 hover:bg-slate-100 dark:text-slate-400 dark:hover:text-slate-100 dark:hover:bg-slate-800 text-sm font-medium transition-colors duration-150'
             }
           >
             {item.icon}
@@ -105,19 +105,19 @@ export default function Sidebar() {
       </nav>
 
       {/* User section */}
-      <div className="p-4 border-t border-slate-800">
+      <div className="p-4 border-t border-slate-200 dark:border-slate-800">
         <div className="flex items-center gap-3 px-2 mb-3">
           <div className="w-8 h-8 rounded-full bg-indigo-600 flex items-center justify-center text-white text-xs font-bold shrink-0">
             {initials}
           </div>
           <div className="min-w-0">
-            <p className="text-sm font-semibold text-slate-100 truncate">{globalUser?.name}</p>
-            <p className="text-xs text-slate-500 truncate">{globalUser?.role}</p>
+            <p className="text-sm font-semibold text-slate-900 dark:text-slate-100 truncate">{globalUser?.name}</p>
+            <p className="text-xs text-slate-400 dark:text-slate-500 truncate">{globalUser?.role}</p>
           </div>
         </div>
         <button
           onClick={logout}
-          className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-slate-400 hover:text-slate-100 hover:bg-slate-800 text-xs font-semibold transition-colors duration-150"
+          className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-slate-500 hover:text-slate-900 hover:bg-slate-100 dark:text-slate-400 dark:hover:text-slate-100 dark:hover:bg-slate-800 text-xs font-semibold transition-colors duration-150"
         >
           <svg className="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
